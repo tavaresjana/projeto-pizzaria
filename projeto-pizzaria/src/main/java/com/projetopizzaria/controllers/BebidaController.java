@@ -1,9 +1,7 @@
 package com.projetopizzaria.controllers;
 
 import com.projetopizzaria.dto.BebidaDto;
-import com.projetopizzaria.dto.ClienteDto;
 import com.projetopizzaria.service.BebidaService;
-import com.projetopizzaria.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

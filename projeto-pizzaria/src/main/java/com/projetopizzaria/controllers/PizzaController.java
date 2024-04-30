@@ -1,6 +1,5 @@
 package com.projetopizzaria.controllers;
 
-import com.projetopizzaria.dto.ClienteDto;
 import com.projetopizzaria.dto.PizzaDto;
 import com.projetopizzaria.service.PizzaService;
 import org.springframework.beans.factory.annotation.Autowired;

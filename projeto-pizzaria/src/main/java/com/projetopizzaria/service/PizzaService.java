@@ -1,6 +1,5 @@
 package com.projetopizzaria.service;
 
-import com.projetopizzaria.dto.ClienteDto;
 import com.projetopizzaria.dto.PizzaDto;
 import com.projetopizzaria.mappers.PizzaMapper;
 import com.projetopizzaria.models.Pizza;
