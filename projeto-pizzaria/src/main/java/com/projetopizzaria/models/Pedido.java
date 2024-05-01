@@ -33,9 +33,9 @@ public class Pedido {
     @JoinColumn(name = "id_cliente")
     private Cliente cliente;
 
-    /*@ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_fornada")
-    private Fornada fornada;*/
+    private Fornada fornada;
 
     @CreationTimestamp
     private Instant dataHora;

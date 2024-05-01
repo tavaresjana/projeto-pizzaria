@@ -16,7 +16,7 @@ public class PedidoDto {
 
     private ClienteDto cliente;
 
-//  private Fornada fornada;
+    private FornadaDto fornada;
 
     private Instant dataHora;
 
