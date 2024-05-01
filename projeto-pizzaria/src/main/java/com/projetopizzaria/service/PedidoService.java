@@ -13,6 +13,8 @@ import com.projetopizzaria.repositories.PedidoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class PedidoService {
 
@@ -71,5 +73,27 @@ public class PedidoService {
         pizzaPedidaRepository.save(pizzaPedidaEditada);
         return pizzaPedidaMapper.entidadeParaDto(pizzaPedidaEditada);
     }*/
+
+    public PedidoDto atualizarPedido(Long id, PedidoDto pedidoDto) {
+
+        Optional<Pedido> optionalPedido = pedidoRepository.findById(id);
+        Pedido pedidoEditado = optionalPedido.get();
+
+        //faço uma busca por cliente&fornada, usando o id informado no json
+        ClienteDto clienteDto = clienteService.buscarClientePorId(pedidoDto.getCliente().getIdCliente());
+        FornadaDto fornadaDto = fornadaService.buscarFornadaPorId((pedidoDto.getFornada().getIdFornada()));
+
+        //tranformo em model
+        Cliente cliente = clienteMapper.dtoParaEntidade(clienteDto);
+        Fornada fornada = fornadaMapper.dtoParaEntidade(fornadaDto);
+
+        //seto o clienteModel & FornadaModel em PedidoEditadoModel.
+        pedidoEditado.setIdPedido(pedidoDto.getIdPedido());
+        pedidoEditado.setCliente(cliente);
+        pedidoEditado.setFornada(fornada);
+
+        pedidoRepository.save(pedidoEditado);
+        return pedidoMapper.entidadeParaDto(pedidoEditado);
+    }
 
 }

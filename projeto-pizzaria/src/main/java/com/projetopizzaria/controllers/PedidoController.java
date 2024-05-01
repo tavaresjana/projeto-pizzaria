@@ -1,9 +1,7 @@
 package com.projetopizzaria.controllers;
 
 import com.projetopizzaria.dto.PedidoDto;
-import com.projetopizzaria.dto.PizzaPedidaDto;
 import com.projetopizzaria.service.PedidoService;
-import com.projetopizzaria.service.PizzaPedidaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,9 +32,9 @@ public class PedidoController {
         return ResponseEntity.status(HttpStatus.OK).body(pedidoDto);
     }
 
-    /*@PutMapping(value = "/{id}")
+    @PutMapping(value = "/{id}")
     public ResponseEntity<PedidoDto> atualizarPedido(@PathVariable Long id, @RequestBody PedidoDto pedidoDto){
-        pedidoService.atualizarPedido(pedidoDto);
+        pedidoService.atualizarPedido(id, pedidoDto);
         return ResponseEntity.ok().build();
-    }*/
+    }
 }
