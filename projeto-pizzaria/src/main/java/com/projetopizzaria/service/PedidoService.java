@@ -60,19 +60,6 @@ public class PedidoService {
         return pedidoMapper.entidadeParaDtoOp(pedidoRepository.findById(id));
     }
 
-    /*public PizzaPedidaDto atualizarPizzaPedida(PizzaPedidaDto pizzaPedidaDto){
-        Optional<PizzaPedida> optionalPizzaPedida = pizzaPedidaRepository.findById(pizzaPedidaDto.getIdPizzaPedida());
-
-        PizzaPedida pizzaPedidaEditada = optionalPizzaPedida.get();
-
-        pizzaPedidaEditada.setIdPizzaPedida(pizzaPedidaDto.getIdPizzaPedida());
-        pizzaPedidaEditada.setPedido(pizzaPedidaDto.getPedido());
-        pizzaPedidaEditada.setPizza(pizzaPedidaDto.getPizza());
-        pizzaPedidaEditada.setQuantidade(pizzaPedidaDto.getQuantidade());
-
-        pizzaPedidaRepository.save(pizzaPedidaEditada);
-        return pizzaPedidaMapper.entidadeParaDto(pizzaPedidaEditada);
-    }*/
 
     public PedidoDto atualizarPedido(Long id, PedidoDto pedidoDto) {
 
