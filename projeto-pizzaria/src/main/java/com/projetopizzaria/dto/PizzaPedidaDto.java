@@ -13,8 +13,8 @@ import lombok.NoArgsConstructor;
 public class PizzaPedidaDto {
 
     private Long idPizzaPedida;
-    private Pedido pedido;
-    private Pizza pizza;
+    private PedidoDto pedido;
+    private PizzaDto pizza;
     @Column(nullable = false)
     private int quantidade;
 }

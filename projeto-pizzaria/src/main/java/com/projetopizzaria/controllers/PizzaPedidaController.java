@@ -32,9 +32,9 @@ public class PizzaPedidaController {
         return ResponseEntity.status(HttpStatus.OK).body(pizzaPedidaDto);
     }
 
-    @PutMapping(value = "/{id}")
+/*    @PutMapping(value = "/{id}")
     public ResponseEntity<PizzaPedidaDto> atualizarPizzaPedida(@PathVariable Long id, @RequestBody PizzaPedidaDto pizzaPedidaDto){
         pizzaPedidaService.atualizarPizzaPedida(pizzaPedidaDto);
         return ResponseEntity.ok().build();
-    }
+    }*/
 }

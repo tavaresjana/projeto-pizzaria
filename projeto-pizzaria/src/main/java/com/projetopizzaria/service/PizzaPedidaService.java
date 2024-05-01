@@ -1,20 +1,17 @@
 package com.projetopizzaria.service;
 
-import com.projetopizzaria.dto.ClienteDto;
+import com.projetopizzaria.dto.PedidoDto;
 import com.projetopizzaria.dto.PizzaDto;
 import com.projetopizzaria.dto.PizzaPedidaDto;
+import com.projetopizzaria.mappers.PedidoMapper;
+import com.projetopizzaria.mappers.PizzaMapper;
 import com.projetopizzaria.mappers.PizzaPedidaMapper;
-import com.projetopizzaria.models.Cliente;
 import com.projetopizzaria.models.Pedido;
 import com.projetopizzaria.models.Pizza;
 import com.projetopizzaria.models.PizzaPedida;
 import com.projetopizzaria.repositories.PizzaPedidaRepository;
-import com.projetopizzaria.repositories.PizzaRepository;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class PizzaPedidaService {
@@ -25,40 +22,42 @@ public class PizzaPedidaService {
     @Autowired
     private PizzaPedidaMapper pizzaPedidaMapper;
 
-    /*@Autowired
-    private PedidoRepository pedidoRepository;*/
+    @Autowired
+    private PedidoMapper pedidoMapper;
 
     @Autowired
-    private PizzaRepository pizzaRepository;
+    private PizzaMapper pizzaMapper;
 
-    public PizzaPedidaDto cadastrarPizzaPedida(PizzaPedidaDto pizzaPedidaDto){
-        PizzaPedida pizzaPedida = new PizzaPedida();
-        Pedido pedido = new Pedido();
-        Pizza pizza = new Pizza();
+    @Autowired
+    private PizzaService pizzaService;
 
-        /*Pedido pedido = pedidoRepository.findById(pizzaPedidaDto.getPedidoId())
-                .orElseThrow(() -> new EntityNotFoundException("Pedido não encontrado"));*/
+    @Autowired
+    private PedidoService pedidoService;
 
-        pizza = pizzaRepository.findById(pizzaPedidaDto.getPizza().getIdPizza())
-                .orElseThrow(() -> new EntityNotFoundException("Pizza não encontrada"));
 
-        pizzaPedida.setPedido(pizzaPedidaDto.getPedido());
+    public void cadastrarPizzaPedida(PizzaPedidaDto pizzaPedidaDto){
+       //buscar pizzaDto e pedidoDto
+        PizzaDto pizzaDto = pizzaService.buscarPizzaPorId(pizzaPedidaDto.getPizza().getIdPizza());
+        PedidoDto pedidoDto = pedidoService.buscarPedidoPorId(pizzaPedidaDto.getPedido().getIdPedido());
+
+        //transformar em model
+        Pizza pizza = pizzaMapper.dtoParaEntidade(pizzaDto);
+        Pedido pedido = pedidoMapper.dtoParaEntidade(pedidoDto);
+
+        PizzaPedida pizzaPedida = pizzaPedidaMapper.dtoParaEntidade(pizzaPedidaDto);
         pizzaPedida.setPizza(pizza);
-        pizzaPedida.setQuantidade(pizzaPedidaDto.getQuantidade());
+        pizzaPedida.setPedido(pedido);
 
-        return pizzaPedidaMapper.entidadeParaDto(pizzaPedidaRepository.save(pizzaPedida));
-
-     //   return pizzaPedidaMapper.entidadeParaDto(pizzaPedidaRepository.save(pizzaPedidaMapper.dtoParaEntidade(pizzaPedidaDto)));
-       // PizzaPedida pizzaPedida = pizzaPedidaMapper.dtoParaEntidade(pizzaPedidaDto);
-      //  PizzaPedida savedPizzaPedida = pizzaPedidaRepository.save(pizzaPedida);
-        //return pizzaPedidaMapper.entidadeParaDto(savedPizzaPedida);
+        pizzaPedidaRepository.save(pizzaPedida);
     }
+
+
 
     public PizzaPedidaDto buscarPizzaPedidaPorId(Long id){
         return pizzaPedidaMapper.entidadeParaDtoOp(pizzaPedidaRepository.findById(id));
     }
 
-    public PizzaPedidaDto atualizarPizzaPedida(PizzaPedidaDto pizzaPedidaDto){
+    /*public PizzaPedidaDto atualizarPizzaPedida(PizzaPedidaDto pizzaPedidaDto){
         Optional<PizzaPedida> optionalPizzaPedida = pizzaPedidaRepository.findById(pizzaPedidaDto.getIdPizzaPedida());
 
         PizzaPedida pizzaPedidaEditada = optionalPizzaPedida.get();
@@ -70,5 +69,5 @@ public class PizzaPedidaService {
 
         pizzaPedidaRepository.save(pizzaPedidaEditada);
         return pizzaPedidaMapper.entidadeParaDto(pizzaPedidaEditada);
-    }
+    }*/
 }
