@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -37,9 +38,9 @@ public class PizzaPedidaController {
         return ResponseEntity.status(HttpStatus.OK).body(valorTotal);
     }
 
-/*    @PutMapping(value = "/{id}")
+    @PutMapping(value = "/{id}")
     public ResponseEntity<PizzaPedidaDto> atualizarPizzaPedida(@PathVariable Long id, @RequestBody PizzaPedidaDto pizzaPedidaDto){
         pizzaPedidaService.atualizarPizzaPedida(pizzaPedidaDto);
         return ResponseEntity.ok().build();
-    }*/
+    }
 }

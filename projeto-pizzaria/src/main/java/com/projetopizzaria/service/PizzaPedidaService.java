@@ -7,7 +7,6 @@ import com.projetopizzaria.mappers.ClienteMapper;
 import com.projetopizzaria.mappers.PedidoMapper;
 import com.projetopizzaria.mappers.PizzaMapper;
 import com.projetopizzaria.mappers.PizzaPedidaMapper;
-import com.projetopizzaria.models.Cliente;
 import com.projetopizzaria.models.Pedido;
 import com.projetopizzaria.models.Pizza;
 import com.projetopizzaria.models.PizzaPedida;
@@ -15,7 +14,6 @@ import com.projetopizzaria.repositories.ClienteRepository;
 import com.projetopizzaria.repositories.PizzaPedidaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ObjectUtils;
 
 import java.math.BigDecimal;
 import java.util.Optional;
@@ -84,17 +82,23 @@ public class PizzaPedidaService {
         return "Valor total do Pedido nº "+pizzaPedida.getPedido().getIdPedido()+" é "+valorTotalPizzaPedida;
     }
 
-    /*public PizzaPedidaDto atualizarPizzaPedida(PizzaPedidaDto pizzaPedidaDto){
+    public PizzaPedidaDto atualizarPizzaPedida(PizzaPedidaDto pizzaPedidaDto){
         Optional<PizzaPedida> optionalPizzaPedida = pizzaPedidaRepository.findById(pizzaPedidaDto.getIdPizzaPedida());
-
         PizzaPedida pizzaPedidaEditada = optionalPizzaPedida.get();
 
+        //buscar pizzaDto e pedidoDto
+        PizzaDto pizzaDto = pizzaService.buscarPizzaPorId(pizzaPedidaDto.getPizza().getIdPizza());
+        PedidoDto pedidoDto = pedidoService.buscarPedidoPorId(pizzaPedidaDto.getPedido().getIdPedido());
+
+        Pizza pizza = pizzaMapper.dtoParaEntidade(pizzaDto);
+        Pedido pedido = pedidoMapper.dtoParaEntidade(pedidoDto);
+
         pizzaPedidaEditada.setIdPizzaPedida(pizzaPedidaDto.getIdPizzaPedida());
-        pizzaPedidaEditada.setPedido(pizzaPedidaDto.getPedido());
-        pizzaPedidaEditada.setPizza(pizzaPedidaDto.getPizza());
+        pizzaPedidaEditada.setPedido(pedido);
+        pizzaPedidaEditada.setPizza(pizza);
         pizzaPedidaEditada.setQuantidade(pizzaPedidaDto.getQuantidade());
 
         pizzaPedidaRepository.save(pizzaPedidaEditada);
         return pizzaPedidaMapper.entidadeParaDto(pizzaPedidaEditada);
-    }*/
+    }
 }
