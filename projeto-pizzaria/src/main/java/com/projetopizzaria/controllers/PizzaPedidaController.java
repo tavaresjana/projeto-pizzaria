@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
 @RestController
 @RequestMapping(value = "/pizzaspedidas")
 public class PizzaPedidaController {
@@ -31,6 +29,12 @@ public class PizzaPedidaController {
     public ResponseEntity<PizzaPedidaDto> buscarPizzaPedidaPorId(@PathVariable Long id){
         PizzaPedidaDto pizzaPedidaDto = pizzaPedidaService.buscarPizzaPedidaPorId(id);
         return ResponseEntity.status(HttpStatus.OK).body(pizzaPedidaDto);
+    }
+
+    @GetMapping(value = "/total/{id}")
+    public ResponseEntity<String> cacularValorTotal(@PathVariable Long id){
+        String valorTotal = pizzaPedidaService.cacularValorTotal(id);
+        return ResponseEntity.status(HttpStatus.OK).body(valorTotal);
     }
 
 /*    @PutMapping(value = "/{id}")

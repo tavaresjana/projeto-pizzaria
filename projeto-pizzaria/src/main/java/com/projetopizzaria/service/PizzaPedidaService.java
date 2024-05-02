@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 
 @Service
@@ -70,6 +71,17 @@ public class PizzaPedidaService {
 
     public PizzaPedidaDto buscarPizzaPedidaPorId(Long id){
         return pizzaPedidaMapper.entidadeParaDtoOp(pizzaPedidaRepository.findById(id));
+    }
+
+    public String cacularValorTotal(Long id){
+        Optional<PizzaPedida> optionalPizzaPedida = pizzaPedidaRepository.findById(id);
+        PizzaPedida pizzaPedida = optionalPizzaPedida.get();
+
+        BigDecimal valorPizza = pizzaPedida.getPizza().getPrecoBase();
+        BigDecimal qtd = new BigDecimal(pizzaPedida.getQuantidade());
+
+        BigDecimal valorTotalPizzaPedida = (valorPizza.multiply(qtd));
+        return "Valor total do Pedido nº "+pizzaPedida.getPedido().getIdPedido()+" é "+valorTotalPizzaPedida;
     }
 
     /*public PizzaPedidaDto atualizarPizzaPedida(PizzaPedidaDto pizzaPedidaDto){
