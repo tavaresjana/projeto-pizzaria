@@ -6,6 +6,7 @@ import com.projetopizzaria.handler.exceptions.NaoEncontradoException;
 import com.projetopizzaria.mappers.BebidaMapper;
 import com.projetopizzaria.models.Bebida;
 import com.projetopizzaria.repositories.BebidaRepository;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +21,6 @@ public class BebidaService {
 
     @Autowired
     private BebidaMapper bebidaMapper;
-
 
     public BebidaDto cadastrarBebida(BebidaDto bebidaDto){
         verificarCampoVazio(bebidaDto);
