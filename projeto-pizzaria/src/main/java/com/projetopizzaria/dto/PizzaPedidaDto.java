@@ -1,7 +1,5 @@
 package com.projetopizzaria.dto;
 
-import com.projetopizzaria.models.Pedido;
-import com.projetopizzaria.models.Pizza;
 import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Data;

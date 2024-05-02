@@ -4,7 +4,9 @@ import com.projetopizzaria.dto.PizzaDto;
 import com.projetopizzaria.models.Pizza;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Component
 public class PizzaMapperImpl implements PizzaMapper {
@@ -41,4 +43,5 @@ public class PizzaMapperImpl implements PizzaMapper {
         pizzaDto.setPersonalizada(pizza.get().isPersonalizada());
         return pizzaDto;
     }
+
 }
