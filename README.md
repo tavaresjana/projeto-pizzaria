@@ -55,10 +55,17 @@ Este projeto é uma aplicação de gestão de pedidos para uma pizzaria. Ele per
 
 ## Como Executar
 
-1. Clone o repositório para sua máquina local.
+1. Clone o repositório para sua máquina local:
+git clone https://github.com/seu_usuario/seu_projeto.git
+
 2. Abra o projeto em sua IDE preferida.
-3. Configure o banco de dados de acordo com as configurações fornecidas.
+
+3. Configure o banco de dados MySQL conforme as configurações fornecidas no arquivo `application.properties`.
+
 4. Compile e execute a aplicação.
+
+5. Após iniciar a aplicação, acesse o Swagger pelo seguinte link:
+http://localhost:8080/swagger-ui.html
 
 ## Tecnologias Utilizadas
 
@@ -66,3 +73,5 @@ Este projeto é uma aplicação de gestão de pedidos para uma pizzaria. Ele per
 - Spring Boot
 - Hibernate
 - MySQL
+
+
