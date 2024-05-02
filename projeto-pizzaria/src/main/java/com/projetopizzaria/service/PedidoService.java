@@ -14,7 +14,6 @@ import com.projetopizzaria.models.Pedido;
 import com.projetopizzaria.repositories.PedidoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ObjectUtils;
 
 import java.util.Optional;
 

@@ -3,6 +3,8 @@ package com.projetopizzaria.service;
 import com.projetopizzaria.dto.PedidoDto;
 import com.projetopizzaria.dto.PizzaDto;
 import com.projetopizzaria.dto.PizzaPedidaDto;
+import com.projetopizzaria.handler.exceptions.CampoVazioException;
+import com.projetopizzaria.handler.exceptions.NaoEncontradoException;
 import com.projetopizzaria.mappers.ClienteMapper;
 import com.projetopizzaria.mappers.PedidoMapper;
 import com.projetopizzaria.mappers.PizzaMapper;
@@ -44,9 +46,13 @@ public class PizzaPedidaService {
 
     @Autowired
     private ClienteMapper clienteMapper;
+    @Autowired
+    private ClienteService clienteService;
+    @Autowired
+    private FornadaService fornadaService;
 
     public void cadastrarPizzaPedida(PizzaPedidaDto pizzaPedidaDto) throws Exception {
-
+        verificarCampoVazio(pizzaPedidaDto);
         //buscar pizzaDto e pedidoDto
         PizzaDto pizzaDto = pizzaService.buscarPizzaPorId(pizzaPedidaDto.getPizza().getIdPizza());
         PedidoDto pedidoDto = pedidoService.buscarPedidoPorId(pizzaPedidaDto.getPedido().getIdPedido());
@@ -68,10 +74,12 @@ public class PizzaPedidaService {
 
 
     public PizzaPedidaDto buscarPizzaPedidaPorId(Long id){
+        verificarId(id);
         return pizzaPedidaMapper.entidadeParaDtoOp(pizzaPedidaRepository.findById(id));
     }
 
     public String cacularValorTotal(Long id){
+        verificarId(id);
         Optional<PizzaPedida> optionalPizzaPedida = pizzaPedidaRepository.findById(id);
         PizzaPedida pizzaPedida = optionalPizzaPedida.get();
 
@@ -83,6 +91,7 @@ public class PizzaPedidaService {
     }
 
     public PizzaPedidaDto atualizarPizzaPedida(PizzaPedidaDto pizzaPedidaDto){
+        verificarId(pizzaPedidaDto.getIdPizzaPedida());
         Optional<PizzaPedida> optionalPizzaPedida = pizzaPedidaRepository.findById(pizzaPedidaDto.getIdPizzaPedida());
         PizzaPedida pizzaPedidaEditada = optionalPizzaPedida.get();
 
@@ -101,4 +110,26 @@ public class PizzaPedidaService {
         pizzaPedidaRepository.save(pizzaPedidaEditada);
         return pizzaPedidaMapper.entidadeParaDto(pizzaPedidaEditada);
     }
+
+
+    public void verificarCampoVazio(PizzaPedidaDto pizzaPedidaDto) {
+        PizzaDto pizzaDto = pizzaService.buscarPizzaPorId(pizzaPedidaDto.getPizza().getIdPizza());
+        PedidoDto pedidoDto = pedidoService.buscarPedidoPorId(pizzaPedidaDto.getPedido().getIdPedido());
+
+        pizzaPedidaDto.setPizza(pizzaDto);
+        pizzaPedidaDto.setPedido(pedidoDto);
+
+        if (pizzaPedidaDto.getPizza() == null || pizzaPedidaDto.getPizza().getIdPizza() == null) {
+            throw new CampoVazioException("Campo 'pizza' ou 'idPizza' não fornecido.");
+        }
+    }
+
+
+    public void verificarId(Long id) {
+        Optional<PizzaPedida> pizzaPedidaOptional = pizzaPedidaRepository.findById(id);
+        if (pizzaPedidaOptional.isEmpty()) {
+            throw new NaoEncontradoException("Pizza pedida não encontrada.");
+        }
+    }
+
 }

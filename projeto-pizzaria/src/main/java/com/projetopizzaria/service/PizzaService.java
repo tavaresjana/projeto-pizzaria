@@ -1,11 +1,9 @@
 package com.projetopizzaria.service;
 
-import com.projetopizzaria.dto.ClienteDto;
 import com.projetopizzaria.dto.PizzaDto;
 import com.projetopizzaria.handler.exceptions.CampoVazioException;
 import com.projetopizzaria.handler.exceptions.NaoEncontradoException;
 import com.projetopizzaria.mappers.PizzaMapper;
-import com.projetopizzaria.models.Cliente;
 import com.projetopizzaria.models.Pizza;
 import com.projetopizzaria.repositories.PizzaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +35,7 @@ public class PizzaService {
     }
 
     public PizzaDto buscarPizzaPorId(Long id){
+        verificarId(id);
         return pizzaMapper.entidadeParaDtoOp(pizzaRepository.findById(id));
     }
 
