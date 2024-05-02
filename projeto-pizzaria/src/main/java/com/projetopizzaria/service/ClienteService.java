@@ -20,6 +20,7 @@ public class ClienteService {
     @Autowired
     private ClienteMapper clienteMapper;
 
+
     public ClienteDto cadastrarCliente(ClienteDto clienteDto){
         verificarCampoVazio(clienteDto);
         return clienteMapper.entidadeParaDto(clienteRepository.save(clienteMapper.dtoParaEntidade(clienteDto)));
