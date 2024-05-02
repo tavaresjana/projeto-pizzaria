@@ -3,6 +3,8 @@ package com.projetopizzaria.service;
 import com.projetopizzaria.dto.ClienteDto;
 import com.projetopizzaria.dto.FornadaDto;
 import com.projetopizzaria.dto.PedidoDto;
+import com.projetopizzaria.handler.exceptions.CampoVazioException;
+import com.projetopizzaria.handler.exceptions.NaoEncontradoException;
 import com.projetopizzaria.mappers.ClienteMapper;
 import com.projetopizzaria.mappers.FornadaMapper;
 import com.projetopizzaria.mappers.PedidoMapper;
@@ -12,6 +14,7 @@ import com.projetopizzaria.models.Pedido;
 import com.projetopizzaria.repositories.PedidoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 import java.util.Optional;
 
@@ -37,6 +40,7 @@ public class PedidoService {
     private FornadaMapper fornadaMapper;
 
     public PedidoDto cadastrarPedido(PedidoDto pedidoDto){
+        verificarCampoVazio(pedidoDto);
         //faço uma busca por cliente&fornada, usando o id informado no json
         ClienteDto clienteDto = clienteService.buscarClientePorId(pedidoDto.getCliente().getIdCliente());
         FornadaDto fornadaDto = fornadaService.buscarFornadaPorId((pedidoDto.getFornada().getIdFornada()));
@@ -57,12 +61,13 @@ public class PedidoService {
     }
 
     public PedidoDto buscarPedidoPorId(Long id){
+        verificarId(id);
         return pedidoMapper.entidadeParaDtoOp(pedidoRepository.findById(id));
     }
 
 
     public PedidoDto atualizarPedido(Long id, PedidoDto pedidoDto) {
-
+        verificarId(id);
         Optional<Pedido> optionalPedido = pedidoRepository.findById(id);
         Pedido pedidoEditado = optionalPedido.get();
 
@@ -83,5 +88,22 @@ public class PedidoService {
         return pedidoMapper.entidadeParaDto(pedidoEditado);
     }
 
+    public void verificarCampoVazio(PedidoDto pedidoDto) {
+        // Verifica se clienteDto e fornadaDto são nulos
+        ClienteDto clienteDto = clienteService.buscarClientePorId(pedidoDto.getCliente().getIdCliente());
+        FornadaDto fornadaDto = fornadaService.buscarFornadaPorId(pedidoDto.getFornada().getIdFornada());
+
+        if (clienteDto == null || fornadaDto == null ||
+                pedidoDto.getCliente().getIdCliente() == null || pedidoDto.getFornada().getIdFornada() == null) {
+            throw new CampoVazioException();
+        }
+    }
+
+    public void verificarId(Long id) {
+        Optional<Pedido> pedidoOptional = pedidoRepository.findById(id);
+        if (pedidoOptional.isEmpty()) {
+            throw new NaoEncontradoException("Pedido não encontrado.");
+        }
+    }
 
 }
