@@ -56,7 +56,7 @@ Este projeto é uma aplicação de gestão de pedidos para uma pizzaria. Ele per
 ## Como Executar
 
 1. Clone o repositório para sua máquina local:
-git clone https://github.com/seu_usuario/seu_projeto.git
+git clone https://github.com/tavaresjana/projeto-pizzaria.git
 
 2. Abra o projeto em sua IDE preferida.
 
